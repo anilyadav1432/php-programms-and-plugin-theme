@@ -1,0 +1,64 @@
+step:1-i)- create database eight_db
+      ii)- CREATE TABLE tweets (
+                id int NOT NULL AUTO_INCREMENT,
+                username varchar(15),
+                content varchar(140),
+                favourite int,
+                PRIMARY KEY (id)
+            ); 
+
+step:2-i)- create table pastries (
+	        id int not null AUTO_INCREMENT,
+            name varchar(50),
+            quantity int,
+            PRIMARY KEY(id)
+           );
+
+     -ii)  select * from pastries
+     -iii) drop table pastries
+
+step:3-i)-  create table people(
+                id int NOT null AUTO_INCREMENT,
+	            first_name varchar(20),
+                last_name varchar(20),
+                age int(2),
+                PRIMARY KEY(id)
+            );
+
+     ii)-  insert into people(first_name,last_name,age) values('anil','yadav','21');
+           insert into people(first_name,last_name,age) values('Manish','Kumar','24');
+    iii) - insert into people(first_name,last_name,age) values('Juhi','yadav','18'),('himanshu','Sharma','20'),('Gaurav','Madhyan','30');
+     iv) - drop table people
+      v) - SHOW TABLES FROM eight_db;
+
+step:4 - CREATE TABLE employee (
+            id int NOT NULL AUTO_INCREMENT,
+            last_name varchar(15) NOT null,
+            first_name varchar(15) NOT null,
+            middle_name varchar(15),
+            age int(2) NOT null,
+            current_status varchar(20) NOT null DEFAULT 'employed',
+            PRIMARY KEY (id)
+         ); 
+
+step:5 i)- Execute the below query : 
+            CREATE TABLE cats (  
+                cat_id INT NOT NULL AUTO_INCREMENT, 
+                name VARCHAR(100),  
+                breed VARCHAR(100),  
+                age INT,  
+                PRIMARY KEY (cat_id) 
+            );
+
+     ii)- Now insert data into this table using below query : 
+
+         INSERT INTO cats(name,breed,age) values('Ringo', 'Tabby', 4),('Cindy', 'Maine Coon', 10),('Dumbledore', 'Maine Coon', 11),('Egg', 'Persian', 4),('Misty', 
+            'Tabby', 13),('George Michael', 'Ragdoll', 9), ('Jackson', 'Sphynx', 
+            7);
+    iii)- SELECT cat_id from cats;
+    iv) - SELECT name,breed from cats;
+    v)  - SELECT name,age from cats where breed="Tabby";
+    vi  - SELECT cat_id,age from cats where cat_id=age;
+
+     
+

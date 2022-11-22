@@ -1,0 +1,33 @@
+span{
+    color:red;
+}
+h1
+{
+    text-align: center;
+}
+.containerDiv .formDiv
+{
+    display:flex;
+    justify-content: center;
+    height: auto;
+}
+.formDiv form
+{
+    text-align: center;
+    width: 600px;
+}
+table
+{
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color:darkslategrey;
+    width: 600px;
+    height: 300px;
+}
+table th{
+    color:white;
+}
+
+

@@ -1,0 +1,70 @@
+body
+{
+    background-color: darkslategray;
+}
+.welcomeDiv
+{
+    width:100%;
+    height:auto;
+}
+.userDetails
+{
+    text-align: center;
+    color:lightcyan
+}
+
+.btnLogout
+{
+    background-color: rgb(243, 66, 66);
+    height:30px;
+    width: 130px;
+    color:white;
+    font-size: 20px;
+    
+}
+.adminMenu
+{
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    width:100%;
+}
+.adminMenu a button
+{
+    height:30px;
+    width:200px;
+    background-color:paleturquoise;
+    box-shadow:3px 3px 5px paleturquoise;
+    font-size: 17px;
+
+}
+.formDiv table
+{
+    height:350px ;
+    width: 420px;
+    margin: auto;
+    box-shadow: 3px 3px 5px paleturquoise;
+}
+.formDiv table input{width:260px;height: 35px;}
+.formDiv table button{width:130px;height: 30px;font-size: 20px;color: white;background-color: green;}
+.displayDiv table
+{
+    height:auto;
+    width: 700px;
+    margin: auto;
+    box-shadow: 3px 3px 5px paleturquoise;
+}
+.displayDiv table .btn1{
+    background-color: forestgreen;
+    color:white;
+    font-size: 19px;
+    height:30px;
+    width:110px;
+}
+.displayDiv table .btn2{
+    background-color:rgb(243, 66, 66);
+    color:white;
+    font-size: 19px;
+    height:30px;
+    width:110px;
+}

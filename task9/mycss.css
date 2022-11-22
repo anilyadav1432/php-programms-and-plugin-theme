@@ -1,0 +1,20 @@
+body{margin: 0;padding: 0;background-color:rgb(146, 243, 222);}
+.outer{height:auto;width: 100%;text-align: center;}
+.subouter{height: auto;width: 90%;margin: auto;}
+.mainu{height:60px;width: 100%;background-color:black;border-radius: 10px;}
+.mainu ul{list-style-type: none;padding: 10px;}
+.mainu ul li{display:inline;margin-left: 20px;}
+.mainu ul li a{font-size: 22px;text-decoration: none;color: white;}
+.formDiv table{height:400px;width:450px;margin: auto;padding: 10px;}
+.formDiv table tr input{height:35px;border-radius:10px;width:250px;}
+.formDiv table tr:last-child{text-align: center;}
+.formDiv table tr button{height:35px;border-radius:10px;width:150px;background-color: dodgerblue;color:white;}
+span{color:red;}
+.btnEdit{background-color: green;color:white;}
+.btnLogout{background-color: rgb(177, 3, 3);color:white;height: 35px;width: 200px;font-size: 20px;}
+.logDiv{margin-top: 10px;text-align: center; margin: auto; width: 400px;}
+.logDiv table{width:400px;border-collapse: collapse;}
+.logDiv table input{width:260px;height: 35px;}
+.logDiv table button{width:130px;height: 30px; background-color: green;color:white;}
+.welcomeDiv{width: 400px;margin:auto;}
+.welcomeDiv table{width: 400px;margin:auto;border-collapse: collapse;}

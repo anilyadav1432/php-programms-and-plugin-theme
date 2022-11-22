@@ -1,0 +1,45 @@
+
+.formDiv
+{
+    padding-top: 30px;
+    height:auto;
+    width: 100%;
+}
+.formDiv h1{
+    text-align: center;
+}
+.formDiv form
+{
+    display: flex;
+    justify-content: center;
+    
+}
+.formDiv table
+{
+    width: 600px;
+    height: 450px;
+    background-color:rgb(21, 38, 54);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    text-align: center;
+}
+.formDiv table tr th
+{
+    font-size: 20px;
+    color:white;
+}
+.formDiv table tr td input{
+    height: 35px;
+    width:270px;
+}
+
+td button
+{
+    height: 35px;
+    width: 120px;
+}
+span{
+    color:red;
+}

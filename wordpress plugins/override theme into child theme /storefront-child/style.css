@@ -1,0 +1,23 @@
+/* Theme Name:   storefront Child
+Theme URI:    http://example.com/ws_storefront-child/
+Description:  storefront Child Theme
+Author:       Anil
+Template:storefront
+Author URI:   http://example.com
+Version:      9.2.0
+*/
+
+/* @import url("../storefront/header.css"); */
+/* Theme Name:   storefront Child
+Theme URI:    http://example.com/ws_storefront-child/
+Description:  storefront Child Theme
+Author:       Anil
+Template:storefront
+Author URI:   http://example.com
+Version:      9.2.0
+*/
+
+/* @import url("../storefront/header.css"); */
+body {
+    background-color: #e8f5f7af;
+}

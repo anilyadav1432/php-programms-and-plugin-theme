@@ -1,0 +1,35 @@
+.mainDiv
+{
+    height: 700px;
+    width: 100%;
+    background-color: darkcyan;
+}
+h1{
+   text-align: center;
+}
+.abstractDiv
+{
+    height: 250px;
+    width: 550px;
+    color:white;
+    margin: auto;
+    background-color: darkolivegreen;
+    border-radius: 20px;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    box-shadow: 5px 5px 10px white;
+}
+.interfaceDiv
+{
+    height: 250px;
+    width: 550px;
+    background-color: darkolivegreen;
+    border-radius: 20px;
+    color:white;
+    margin: auto;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    box-shadow: 5px 5px 10px white;
+}

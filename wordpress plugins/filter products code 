@@ -1,0 +1,256 @@
+
+/**********Anil Work bellow ********/
+
+
+/**
+ * Display admin product nutrients setting field(s)
+ * */
+add_action('woocommerce_product_options_general_product_data', 'ced_product_nutrients_fields');
+function ced_product_nutrients_fields() {
+    global $product_object;
+
+    echo '<div class=" product_nutrients_field ">';
+	echo '<h1 style="text-align:center;">Product Nutrients</h1>';
+    // nutrients Product Text Field
+    woocommerce_wp_text_input( array( 
+        'id'          => 'calories',
+        'label'       => __('Calories :', 'woocommerce'),
+        'placeholder' => 'please enter calories',
+        'desc_tip'    => 'true', // <== Not needed as you don't use a description
+		'type'        => 'number'
+    ) );
+	woocommerce_wp_text_input( array( 
+        'id'          => 'netcarbs',
+        'label'       => __('Net Carbs :', 'woocommerce'),
+        'placeholder' => 'please enter net carbs',
+        'desc_tip'    => 'true', // <== Not needed as you don't use a description
+		'type'        => 'number'
+    ) );
+	woocommerce_wp_text_input( array( 
+        'id'          => 'protein',
+        'label'       => __('Protein :', 'woocommerce'),
+        'placeholder' => 'please enter protein',
+        'desc_tip'    => 'true', // <== Not needed as you don't use a description
+		'type'        => 'number'
+    ) );
+                  
+    echo '</div>';
+}
+
+// Save admin product nutrients setting field(s) values
+add_action('woocommerce_admin_process_product_object', 'ced_product_nutrients_fields_save');
+function ced_product_nutrients_fields_save( $product ) {
+    if ( isset($_POST['calories']) ) {
+        $product->update_meta_data( 'calories', sanitize_text_field( $_POST['calories'] ) );
+    }
+	if ( isset($_POST['netcarbs']) ) {
+        $product->update_meta_data( 'netcarbs', sanitize_text_field( $_POST['netcarbs'] ) );
+    }
+	if ( isset($_POST['protein']) ) {
+        $product->update_meta_data( 'protein', sanitize_text_field( $_POST['protein'] ) );
+    }
+	
+}
+
+
+/******shop/archive page printing fields data */
+add_action( 'woocommerce_after_shop_loop_item_title', 'ced_nutrients_field_display_below_title', 2 );
+function ced_nutrients_field_display_below_title(){
+    global $product;
+
+    // Get the nutrients field value
+    $calories = get_post_meta( $product->get_id(), 'calories', true );
+    $netcarbs = get_post_meta( $product->get_id(), 'netcarbs', true );
+    $protein = get_post_meta( $product->get_id(), 'protein', true );
+
+
+    // Display
+    if( ! empty($calories) || ! empty($netcarbs) || ! empty($protein)){
+		echo '<div class=" product_nutrients_field " style="width:100%;">';
+		if( ! empty($calories) ){
+        	echo '<div style="width:32%;float:left;border:1px solid;"><p>Calories</p><p class="calories-field">'.$calories.'</p></div>';
+		}else{
+			$calories = 0;
+			echo '<div style="width:32%;float:left;border:1px solid;"><p>Calories</p><p class="calories-field">'.$calories.'</p></div>';
+		}
+		if( ! empty($netcarbs) ){
+       	 	echo '<div style="width:32%;float:left;border:1px solid;"><p>Net Carbs</p><p class="netcarbs-field">'.$netcarbs.'</p></div>';
+		}else{       
+			$netcarbs = 0;
+			echo '<div style="width:32%;float:left;border:1px solid;"><p>Net Carbs</p><p class="netcarbs-field">'.$netcarbs.'</p></div>';
+		}
+		if( ! empty($protein) ){
+        	echo '<div style="width:32%;float:left;border:1px solid;"><p>Protein</p><p class="protein-field">'.$protein.'</p></div>';
+		}else{
+			$protein = 0;
+			echo '<div style="width:32%;float:left;border:1px solid;"><p>Protein</p><p class="protein-field">'.$protein.'</p></div>';
+		}
+		echo '</div>';
+    }
+}
+
+/**
+ * filter code for shop/archive page written bellow
+ * 
+ * */
+
+add_action('woocommerce_before_shop_loop','ced_nutrients_filters_input');
+/**
+ * This function will print filter dropdown on shop page
+ * 
+ * */
+function ced_nutrients_filters_input(){
+	echo "<div style='width:70%;display:flex;' class='nutrients_filter'>";
+		echo "<select id='calories'><option value='' disabled selected>Calories</option><option value='50'>Under 50 Calories</option><option value='100'>50-100 Calories</option><option value='1000'>Over 100 Calories</option></select>";
+		echo "<select id='netcarbs'><option value='' disabled selected>Net Carbs</option><option value='50'>Under 50 Net Carbs</option><option value='100'>50-100 Net Carbs</option><option value='1000'>Over 100 Net Carbs</option></select>";
+		echo "<select id='protein'><option value='' disabled selected>protein</option><option value='50'>Under 50 Protein</option><option value='100'>50-100 Protein</option><option value='1000'>Over 100 Protein</option></select>";
+	echo "</div>";
+}
+/**
+ * for write js we required 'wp_header' or 'wp_footer' hook in theme
+ * */
+add_action('wp_footer', 'ced_wp_footer');  
+function ced_wp_footer(){
+	?>
+	<script>
+    /*****for calories change event */
+		jQuery(document).on('change','select#calories',function(){
+			var calories    = jQuery(this).val();
+      var netcarbs    = jQuery('#netcarbs').val();
+      netcarbs         = (netcarbs)?netcarbs:'';
+      var protein     = jQuery('#protein').val();
+      protein         = (protein)?protein:'';
+      //alert(calories);
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,protein:protein,netcarbs:netcarbs,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response);  
+					}
+      });
+			
+		});
+    /*****for netcarbs change event */
+		jQuery(document).on('change','#netcarbs',function(){
+			var netcarbs    = jQuery(this).val();
+      var calories    = jQuery('#calories').val();
+      calories        = (calories)?calories:'';
+      var protein     = jQuery('#protein').val();
+      protein         = (protein)?protein:'';
+      // alert(protein);
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,protein:protein,netcarbs:netcarbs,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response); 
+            // jQuery('.products').replaceWith(response); 
+					}
+      });
+			
+		});
+    /*****for protein change event */
+		jQuery(document).on('change','#protein',function(){
+      var calories    = jQuery('#calories').val();
+      calories        = (calories)?calories:'';
+			var protein     = jQuery(this).val();
+			var netcarbs    = jQuery('#netcarbs').val();
+      netcarbs        = (netcarbs)?netcarbs:'';
+      // alert(protein);
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,protein:protein,netcarbs:netcarbs,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response); 
+            // jQuery('.products').replaceWith(response); 
+					}
+      });
+			
+		});
+
+	</script>
+
+<?php
+}
+
+add_action('wp_ajax_ced_filter_nutrients_product', 'ced_filter_nutrients_product'); //its work If Login
+add_action('wp_ajax_nopriv_ced_filter_nutrients_product', 'ced_filter_nutrients_product'); //its work if not login
+/**
+ * This function will print filter product on shop page
+ * 
+ * */
+function ced_filter_nutrients_product(){
+  $nutrients_key =array();
+  $nutrients_val =array();
+    if(isset($_GET['calories']) && !empty($_GET['calories'])){
+      $calories_key       = 'calories';
+      $calories_val       = $_GET['calories'];
+      $nutrients_key[]    = 'calories';
+      $nutrients_val[]    =  $_GET['calories'];
+    }if(isset($_GET['netcarbs']) && !empty($_GET['netcarbs'])){
+      $netcarbs_key       = 'netcarbs';
+      $netcarbs_val       = $_GET['netcarbs'];
+      $nutrients_key[]      = 'netcarbs';
+      $nutrients_val[]    =  $_GET['netcarbs'];
+    }if(isset($_GET['protein']) && !empty($_GET['protein'])){
+      $protein_key       = 'protein';
+      $protein_val       = $_GET['protein'];
+      $nutrients_key[]      = 'protein';
+      $nutrients_val[]    =  $_GET['protein'];
+    }
+    wp_reset_query();
+  // echo $protein_key;
+    // if (!empty($nutrients_key)):
+      if(count($nutrients_key) == 1 ){
+      
+        $argsnew = array(
+          'post_type'      => 'product',
+          'posts_per_page' => 12,
+          'meta_query'     => array(
+              array(
+                  'key'     => $nutrients_key[0],
+                  'value'   => $nut_val = $nutrients_val[0]==50?50:($nutrients_val[0]==100?array(50, 100):($nutrients_val[0]==1000?100:"")),
+                  'compare' => $nut_val==50?'<':($nut_val==array(50, 100)?'BETWEEN':($nutrients_val[0]==1000?'>':"")),
+                  'type'    => 'NUMERIC',
+              )
+            )
+          );
+      }else{
+        $argsnew = array(
+          'post_type'      => 'product',
+          'posts_per_page' => 12,
+          'meta_query'     => array()
+        );
+        for($i=0;$i<count($nutrients_key);$i++){
+          
+          $argsnew['meta_query'][] = array(
+                    'relation' => 'AND',
+                      array(
+                          'key'     => $nutrients_key[$i],
+                          'value'   => $nut_val = $nutrients_val[$i]==50?50:($nutrients_val[$i]==100?array(50, 100):($nutrients_val[$i]==1000?100:"")),
+                          'compare' => $nut_val==50?'<':($nut_val==array(50, 100)?'BETWEEN':($nutrients_val[$i]==1000?'>':"")),
+                          'type'    => 'NUMERIC',
+                        ),
+                      );             
+        }
+      }
+    //  $argsnew = array_map("unserialize", array_unique(array_map("serialize", $argsnew)));
+      // echo "<pre>";print_r($argsnew);
+
+		$loop = new WP_Query( $argsnew );
+    // print_r($loop);
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) : $loop->the_post();
+        wc_get_template_part( 'content', 'product' );
+			endwhile;
+		} else {
+			echo __( 'No products found' );
+		}
+		wp_reset_postdata();
+    exit();
+}

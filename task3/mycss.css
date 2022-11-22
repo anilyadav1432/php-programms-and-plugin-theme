@@ -1,0 +1,113 @@
+#navi
+{
+height:50px;
+width:1100px;
+border:1px solid;
+background-color:#333333;
+border-radius:10px;
+box-shadow:0px 0px 5px 2px black;
+display: flex;
+justify-content: center;
+}
+#menu
+{
+height:50px;
+width:850px;
+margin-top:0px;
+float:left;
+background-color:transparent;
+}
+#menu ul
+{
+list-style-type:none;
+
+}
+#menu ul li
+{
+display:inline;
+padding:15px;
+margin-left:10px;
+}
+#menu ul li a
+{
+color:white;
+font-size: 18px;
+text-decoration:none;
+}
+#menu ul li:hover
+{
+background-color:red;
+border-radius:20px;
+}
+#navi:hover
+{
+background-color:black;
+color:white;
+box-shadow:0px 0px 15px 5px red;
+} 
+#menu ul li a:hover
+{
+color:green;
+}
+#nav_right
+{
+height:50px;
+width:245px;
+float:left;
+text-align:center;
+background-color:transparent;
+}
+
+.formDiv
+{
+    padding-top: 30px;
+    height:auto;
+    width: 100%;
+}
+.formDiv h1{
+    text-align: center;
+}
+.formDiv form
+{
+    display: flex;
+    justify-content: center;
+    
+}
+.formDiv table
+{
+    width: 600px;
+    height: 450px;
+    background-color: thistle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    text-align: center;
+}
+.formDiv table tr th
+{
+    font-size: 20px;
+}
+.formDiv table tr td input{
+    height: 35px;
+    width:270px;
+}
+textarea
+{
+    height: 35px;
+    width: 270px;
+}
+select
+{
+    height: 35px;
+    width: 270px;
+}
+
+td button
+{
+    height: 35px;
+    width: 120px;
+}
+span{
+    color:red;
+}

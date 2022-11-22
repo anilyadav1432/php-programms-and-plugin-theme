@@ -1,0 +1,23 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    background-color: darkslategray;
+}
+h1{
+    color:white;
+    text-align: center;
+    border-bottom: 2px solid skyblue;
+}
+.outerDiv
+{
+    display: flex;
+    justify-content: space-around;
+}
+.outerDiv select
+{
+    height: 30px;
+    font-size: 19px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px grey;
+}

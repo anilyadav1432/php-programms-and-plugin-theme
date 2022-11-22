@@ -1,0 +1,9 @@
+$(document).ready(function(){
+    $.ajax({
+        url:"getcode.php",
+        type:"post",
+        success:function(data){
+            $(".appendData").html(data);
+        }
+    });
+});

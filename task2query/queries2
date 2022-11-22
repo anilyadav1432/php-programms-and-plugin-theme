@@ -1,0 +1,19 @@
+step:1 i)- update cats set name="jack" where name="Jackson"
+      ii)- update cats set breed="British Shorthai" where name="Ringo"
+     iii)- update cats set age="12" where breed="Maine Coon"
+     iv) - DELETE from cats where age="4"
+      v) - DELETE from cats where cat_id=age
+     vi-   truncate TABLE cats
+
+step:2 i)- select * from books where title LIKE '%Stories%'
+      ii)- select title,pages from books where pages=(SELECT MAX(pages) from books)
+     iii)- select concat(title,' - ',released_year) as summary from books order by released_year DESC limit 3;
+      iv)- select title,author_lname from books where author_lname LIKE '% %'
+       v)- SELECT title,released_year,stock_quantity from books ORDER BY stock_quantity ASC LIMIT 3;
+      vi)- SELECT released_year as 'year',COUNT(*) as '# books',AVG(pages) as 'avg pages' FROM books GROUP BY released_year;
+
+step:3 i)- SELECT students.first_name, papers.title,papers.grade FROM students INNER JOIN papers ON students.id = papers.student_id ORDER BY papers.grade desc;
+      ii)- SELECT students.first_name,if(papers.title=NULL,'NULL',papers.title) as title,papers.grade FROM students LEFT JOIN papers ON students.id = papers.student_id order by students.id ASC;
+     iii)- SELECT students.first_name,if(papers.title=papers.title,papers.title,'MISSING') as title,if(papers.grade=papers.grade,papers.grade,0) as grade FROM students LEFT JOIN papers ON students.id = papers.student_id ORDER BY students.id ASC;
+      iv)- SELECT students.first_name,if(papers.grade=papers.grade,AVG(papers.grade),"0") as average FROM students LEFT JOIN papers ON students.id = papers.student_id GROUP BY students.id ORDER BY papers.grade DESC;
+       v)- SELECT students.first_name,if(papers.grade=papers.grade,AVG(papers.grade),"0") as average,if(AVG(papers.grade)>75,"PASSING","FAILING") as passing_status FROM students LEFT JOIN papers ON students.id = papers.student_id GROUP BY students.id ORDER BY papers.grade DESC;

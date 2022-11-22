@@ -1,0 +1,117 @@
+table.ced_sadc_add_day_cost {
+  width: 100%;
+}
+table.ced_sadc_add_day_cost tbody tr td span:first-child {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.select2-container.select2-container-multi {
+    width: 200px;
+}
+.hide
+{
+    display: none;
+}
+.display{
+    display: block;
+}
+.ced_sadc_email_image{
+    background-color: #fff;
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 33px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+#ced_sadc_loader {
+    background-color: rgba(255, 255, 255, 0.6);
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+}
+#ced_sadc_loader img {
+    display: block;
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 40%;
+}   
+.ced_sadc_email_image_success{
+    font-size: 16px;
+    color:green;
+    max-width: 300px;
+ width:100%;
+}
+.ced_sadc_email_image_error{
+    font-size: 16px;
+    color:red;
+    max-width: 300px;
+ width:100%;
+}
+#ced_sadc_send_email{
+    padding:10px;
+    margin:10px;
+    color: white;
+    background-color: black;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 0;
+}
+.ced_sadc_email_field{
+    height: 41px;
+    width:25%;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_banner a{
+    display: block;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_banner{
+    max-width: 1116px;
+    width: 100%;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_banner a img{
+    width: 100%;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content{
+    margin: 10px;
+    position: relative;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_cross_image_container{
+    position: absolute;
+    right: -17px;
+    top: -17px;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_cross_image_container .ced_sadc_cross_image:after{
+     background-color: #fff;
+ content: "";
+ height: 2px;
+ left: 3px;
+ margin: 0 auto;
+ position: absolute;
+ top: 7px;
+ transform: rotate(44deg);
+ width: 10px;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_cross_image_container .ced_sadc_cross_image:before{
+   background-color: #fff;
+ content: "";
+ height: 2px;
+ left: 3px;
+ position: absolute;
+ top: 7px;
+ transform: rotate(138deg);
+ width: 10px;
+ z-index: 9999;
+}
+.ced_sadc_email_image .ced_sadc_email_main_content .ced_sadc_cross_image_container .ced_sadc_cross_image{
+   border-radius: 50%;
+    height: 15px;
+    width: 16px;
+    padding:0;
+}

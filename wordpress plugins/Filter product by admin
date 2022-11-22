@@ -1,0 +1,292 @@
+/**
+ * add menu and page to set nutrients filter values 
+ */
+add_action('admin_menu', 'ced_nutrients_filter_val_menu');
+
+function ced_nutrients_filter_val_menu(){
+  add_menu_page( 'Set Nutrients Filter Values ', 'Nutrients Filter Values', 'manage_options', 'nutrients_filter_values', 'ced_nutrients_filter_value_fun','',10);
+}
+/**
+ *  set nutrients filter values fields
+ */
+function ced_nutrients_filter_value_fun(){
+  if(isset($_POST['submit']))
+  {
+     $under_val_filter        = $_POST['under_val_filter'];
+     $between_from_val_filter = $_POST['between_from_val_filter'];
+     $between_to_val_filter   = $_POST['between_to_val_filter'];
+     $above_val_filter        = $_POST['above_val_filter'];
+     $deprecated              = null;
+     $autoload                = 'no';
+     if ( get_option( 'under_val_filter' ) !== false) {       
+      // The option already exists, so update it.
+        update_option( "under_val_filter", $under_val_filter );
+      }else{
+          add_option( "under_val_filter", $under_val_filter, $deprecated, $autoload );
+      }
+      if ( get_option( 'between_from_val_filter' ) !== false) {       
+        // The option already exists, so update it.
+          update_option( "between_from_val_filter", $between_from_val_filter );
+      }else{
+          add_option( "between_from_val_filter", $between_from_val_filter, $deprecated, $autoload );
+      }
+      if ( get_option( 'between_to_val_filter' ) !== false) {       
+        // The option already exists, so update it.
+          update_option( "between_to_val_filter", $between_to_val_filter );
+      }else{
+          add_option( "between_to_val_filter", $between_to_val_filter, $deprecated, $autoload );
+      }
+      if ( get_option( 'above_val_filter' ) !== false) {       
+        // The option already exists, so update it.
+          update_option( "above_val_filter", $above_val_filter );
+      }else{
+          add_option( "above_val_filter", $above_val_filter, $deprecated, $autoload );
+      }
+  }
+  ?>
+  <div class="nut_filter_val">
+    <h1>Set Nutrients filter Values</h1>
+    <form action="" method="post">
+      <label for="under_val_filter">Enter Under Filter Value</label>
+      <input type="number" name="under_val_filter" id="under_val_filter" value="<?php echo get_option( 'under_val_filter' )!== false?get_option( 'under_val_filter' ):""; ?>">
+      <label for="between_from_val_filter">Enter Between Filter Value</label>
+      <label for="between_from_val_filter">From :</label>
+      <input type="number" name="between_from_val_filter" value="<?php echo get_option( 'between_from_val_filter' )!== false?get_option( 'between_from_val_filter' ):""; ?>">
+      <label for="between_to_val_filter">To :</label>
+      <input type="number" name="between_to_val_filter" value="<?php echo get_option( 'between_to_val_filter' )!== false?get_option( 'between_to_val_filter' ):""; ?>">
+      <label for="above_val_filter">Enter Between Filter Value</label>
+      <input type="number" name="above_val_filter" value="<?php echo get_option( 'above_val_filter' )!== false?get_option( 'above_val_filter' ):""; ?>">
+      <input type="submit" value="Save Filter Values" name="submit" id="save_nutrients_val">
+    </form>
+  </div>
+  
+  <?php
+  
+}
+
+/**
+ * filter code for shop/archive page written bellow
+ * 
+ * */
+
+add_action('woocommerce_before_shop_loop','ced_nutrients_filters_input');
+/**
+ * This function will print filter dropdown on shop page
+ * 
+ * */
+function ced_nutrients_filters_input(){
+  $under_val_filter = get_option( 'under_val_filter' )!== false?get_option( 'under_val_filter' ):"";
+  $between_from_val_filter = get_option( 'between_from_val_filter' )!== false?get_option( 'between_from_val_filter' ):"";
+  $between_to_val_filter = get_option( 'between_to_val_filter' )!== false?get_option( 'between_to_val_filter' ):"";
+  $above_val_filter = get_option( 'above_val_filter' )!== false?get_option( 'above_val_filter' ):"";
+  $between_val_arr = json_encode(array($between_from_val_filter, $between_to_val_filter));
+	echo "<div class='nutrients_filter'>";
+		echo "<select id='calories'><option value='' disabled selected>Calories</option><option value='".$under_val_filter."' data-att1='under'>Under $under_val_filter Calories</option><option value='".$between_val_arr."' data-att1='between'>$between_from_val_filter-$between_to_val_filter Calories</option><option value='".$above_val_filter."' data-att1='over'>Over $above_val_filter Calories</option></select><input type='button' value='Reset' id='reset_cal'>";
+		echo "<select id='netcarbs'><option value='' disabled selected>Net Carbs</option><option value='".$under_val_filter."' data-att1='under'>Under $under_val_filter Net Carbs</option><option value='".$between_val_arr."' data-att1='between'>$between_from_val_filter-$between_to_val_filter Net Carbs</option><option value='".$above_val_filter."' data-att1='over'>Over $above_val_filter Net Carbs</option></select><input type='button' value='Reset' id='reset_net'>";
+		echo "<select id='protein'><option value='' disabled selected>protein</option><option value='".$under_val_filter."' data-att1='under'>Under $under_val_filter Protein</option><option value='".$between_val_arr."' data-att1='between'>$between_from_val_filter-$between_to_val_filter Protein</option><option value='".$above_val_filter."' data-att1='over'>Over $above_val_filter Protein</option></select><input type='button' value='Reset' id='reset_protein'>";
+	echo "</div>";
+}
+/**
+ * for write js we required 'wp_header' or 'wp_footer' hook in theme
+ * */
+add_action('wp_footer', 'ced_wp_footer');  
+function ced_wp_footer(){
+	?>
+	<script>
+    /** reset calories select input field */
+    jQuery(document).on('click','#reset_cal',function(){
+      jQuery('#calories').val('');
+      if(jQuery('#netcarbs').val() == null && jQuery('#protein').val() == null){
+        location.reload();
+      }else{
+        jQuery('select#calories').change(); //call click method of DOM node
+      }
+    });
+    /** reset net carbs select input field */
+    jQuery(document).on('click','#reset_net',function(){
+      jQuery('#netcarbs').val('');
+      if(jQuery('#calories').val() == null && jQuery('#protein').val() == null){
+        location.reload();
+      }else{
+        jQuery('select#netcarbs').change(); //call click method of DOM node
+      }
+     
+    });
+    /** reset protien select input field */
+    jQuery(document).on('click','#reset_protein',function(){
+      jQuery('#protein').val('');
+      if(jQuery('#calories').val() == null && jQuery('#netcarbs').val() == null){
+        location.reload();
+      }else{
+        jQuery('select#protein').change(); //call click method of DOM node
+      }
+     
+    });
+    /*****for calories change event */
+		jQuery(document).on('change','select#calories',function(){
+			var calories      = jQuery(this).val();
+			var calories_att1 = jQuery(this).find(':selected').attr('data-att1');
+      calories          = JSON.parse(calories);
+      var netcarbs      = jQuery('#netcarbs').val();
+      netcarbs          = (netcarbs)?JSON.parse(netcarbs):'';
+      var netcarbs_att1 = jQuery('#netcarbs').find(':selected').attr('data-att1');
+      netcarbs_att1     = (netcarbs_att1)?netcarbs_att1:'';
+      netcarbs          = (netcarbs)?netcarbs:'';
+      var protein       = jQuery('#protein').val();
+      protein           = JSON.parse(protein);
+      var protein_att1  = jQuery('#protein').find(':selected').attr('data-att1');
+      protein_att1      = (protein_att1)?protein_att1:'';
+      protein           = (protein)?protein:'';
+      // console.log(calories_att1);
+      //alert(calories);
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,calories_att1:calories_att1,protein:protein,protein_att1:protein_att1,netcarbs:netcarbs,netcarbs_att1:netcarbs_att1,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response);  
+					}
+      });
+			
+		});
+    /*****for netcarbs change event */
+		jQuery(document).on('change','#netcarbs',function(){
+			var netcarbs      = jQuery(this).val();
+      netcarbs          = (netcarbs)?JSON.parse(netcarbs):'';
+      var netcarbs_att1 = jQuery(this).find(':selected').attr('data-att1');
+      var calories      = jQuery('#calories').val();
+      calories          = (calories)?JSON.parse(calories):'';
+      var calories_att1 = jQuery('#calories').find(':selected').attr('data-att1');
+      var protein       = jQuery('#protein').val();
+      protein           = JSON.parse(protein);
+      protein           = (protein)?protein:'';
+      var protein_att1 = jQuery('#protein').find(':selected').attr('data-att1');
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,calories_att1:calories_att1,protein:protein,protein_att1:protein_att1,netcarbs:netcarbs,netcarbs_att1:netcarbs_att1,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response); 
+            // jQuery('.products').replaceWith(response); 
+					}
+      });
+			
+		});
+    /*****for protein change event */
+		jQuery(document).on('change','#protein',function(){
+      var calories        = jQuery('#calories').val();
+      calories            = JSON.parse(calories);
+      calories            = (calories)?calories:'';
+      var calories_att1   = jQuery('#calories').find(':selected').attr('data-att1');
+			var protein         = jQuery(this).val();
+      protein             = JSON.parse(protein);
+      var protein_att1    = jQuery(this).find(':selected').attr('data-att1');
+			var netcarbs        = jQuery('#netcarbs').val();
+      netcarbs            = JSON.parse(netcarbs);
+      netcarbs            = (netcarbs)?netcarbs:'';
+      var netcarbs_att1   = jQuery('#netcarbs').find(':selected').attr('data-att1');
+      // alert(protein);
+			jQuery.ajax({
+					type: "GET",
+					url:  "<?php echo admin_url('admin-ajax.php'); ?>",
+					data: {calories:calories,calories_att1:calories_att1,protein:protein,protein_att1:protein_att1,netcarbs:netcarbs,netcarbs_att1:netcarbs_att1,action:'ced_filter_nutrients_product'},
+					success: function(response){
+						// alert(response);
+            jQuery('.products').html(response); 
+            // jQuery('.products').replaceWith(response); 
+					}
+      });
+			
+		});
+
+	</script>
+
+<?php
+}
+
+add_action('wp_ajax_ced_filter_nutrients_product', 'ced_filter_nutrients_product'); //its work If Login
+add_action('wp_ajax_nopriv_ced_filter_nutrients_product', 'ced_filter_nutrients_product'); //its work if not login
+/**
+ * This function will print filter product on shop page
+ * 
+ * */
+function ced_filter_nutrients_product(){
+
+
+
+  $nutrients_key    =array();
+  $nutrients_val    =array();
+  $compare_keyword  =array();
+  // print_r($_GET['calories']);
+    if(isset($_GET['calories']) && !empty($_GET['calories'])){
+      $calories_key       = 'calories';
+      $calories_val       = $_GET['calories'];
+      $compare_keyword[]  = $_GET['calories_att1'];
+      $nutrients_key[]    = 'calories';
+      $nutrients_val[]    =  $_GET['calories'];
+    }if(isset($_GET['netcarbs']) && !empty($_GET['netcarbs'])){
+      $netcarbs_key       = 'netcarbs';
+      $netcarbs_val       = $_GET['netcarbs'];
+      $compare_keyword[]  = $_GET['netcarbs_att1'];
+      $nutrients_key[]    = 'netcarbs';
+      $nutrients_val[]    =  $_GET['netcarbs'];
+    }if(isset($_GET['protein']) && !empty($_GET['protein'])){
+      $protein_key       = 'protein';
+      $protein_val       = $_GET['protein'];
+      $compare_keyword[] = $_GET['protein_att1'];
+      $nutrients_key[]   = 'protein';
+      $nutrients_val[]   =  $_GET['protein'];
+    }
+    wp_reset_query();
+    
+  // echo $protein_key;
+    // if (!empty($nutrients_key)):
+      if(count($nutrients_key) == 1 ){
+      
+        $argsnew = array(
+          'post_type'      => 'product',
+          'posts_per_page' => 12,
+          'meta_query'     => array(
+              array(
+                  'key'     => $nutrients_key[0],
+                  'value'   => $nut_val = is_array($nutrients_val[0])?array($nutrients_val[0][0],$nutrients_val[0][1]):$nutrients_val[0],
+                  'compare' => $compare_keyword[0]=='under'?'<':($compare_keyword[0] == 'between'?'BETWEEN':($compare_keyword[0]=='over'?'>':"")),
+                  'type'    => 'NUMERIC',
+              )
+            )
+          );
+      }else{
+        $argsnew = array(
+          'post_type'      => 'product',
+          'posts_per_page' => 12,
+          'meta_query'     => array()
+        );
+        for($i=0;$i<count($nutrients_key);$i++){
+          
+          $argsnew['meta_query'][] = array(
+                    'relation' => 'AND',
+                      array(
+                          'key'     => $nutrients_key[$i],
+                          'value'   => $nut_val = is_array($nutrients_val[$i])?array($nutrients_val[$i][0],$nutrients_val[$i][1]):$nutrients_val[$i],
+                          'compare' => $compare_keyword[$i]=='under'?'<':($compare_keyword[$i] == 'between'?'BETWEEN':($compare_keyword[$i]=='over'?'>':"")),
+                          'type'    => 'NUMERIC',
+                        ),
+                      );             
+        }
+      }
+      // echo "<pre>";print_r($argsnew);
+
+		$loop = new WP_Query( $argsnew );
+    // print_r($loop);
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) : $loop->the_post();
+        wc_get_template_part( 'content', 'product' );
+			endwhile;
+		} else {
+			echo __( 'No products found' );
+		}
+		wp_reset_postdata();
+    exit();
+}

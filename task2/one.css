@@ -1,0 +1,35 @@
+body
+{
+    margin: 0;
+    padding: 0;
+}
+h1
+{
+    text-align: center;
+}
+.containerDiv div
+{
+    display:flex;
+    justify-content: center;
+}
+table
+{
+    /* background-color: darksalmon; */
+    border-radius: 10px;
+    border-collapse: collapse;
+    overflow: hidden;
+
+    text-align: center;
+    width: 650px;
+}
+table tr th
+{
+    background-color: black;
+    padding: 10px;
+    color: white;
+}
+table tr:nth-child(even)
+{
+    background-color:cadetblue;
+    color:black;
+}
